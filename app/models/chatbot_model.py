@@ -34,7 +34,7 @@ with open(INTENTS_PATH, "r", encoding="utf-8") as f:
     intents = json.load(f)
 
 # ------------------ HUGGING FACE API ------------------
-HF_API_TOKEN = "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"
+HF_API_TOKEN = "YOUR API KEY HERE"
 API_URL = "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill"
 HEADERS = {"Authorization": f"Bearer {HF_API_TOKEN}"}
 
