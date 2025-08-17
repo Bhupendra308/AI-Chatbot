@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Chatbot</title>
+  <style>
+    :root {
+      --bg: #f4f4f4;
+      --text: #000;
+      --chat-bg: #fff;
+      --input-bg: #fff;
+    }
+
+    body.dark {
+      --bg: #121212;
+      --text: #eee;
+      --chat-bg: #1e1e1e;
+      --input-bg: #2a2a2a;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+    }
+
+    .chat-container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: var(--chat-bg);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    }
+
+    .chat-box {
+      max-height: 400px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      background-color: var(--input-bg);
+    }
+
+    .message {
+      margin: 10px 0;
+    }
+
+    .user {
+      text-align: right;
+      color: var(--text);
+    }
+
+    .bot {
+      text-align: left;
+      color: #007bff;
+    }
+
+    .timestamp {
+      font-size: 0.8em;
+      color: gray;
+      display: block;
+      margin-top: 3px;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      background-color: var(--input-bg);
+      color: var(--text);
+    }
+
+    button {
+      padding: 12px 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .top-bar button {
+      padding: 8px 14px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="top-bar">
+      <h2>AI Chatbot</h2>
+      <div>
+        <button onclick="toggleDarkMode()">🌓 Theme</button>
+        <button onclick="exportChat()">📁 Export</button>
+      </div>
+    </div>
+
+    <div class="chat-box" id="chat-box"></div>
+
+    <div class="input-group">
+      <input type="text" id="message" placeholder="Type your message here..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const sessionId = localStorage.getItem('chat_session_id') || generateSessionId();
+    localStorage.setItem('chat_session_id', sessionId);
+
+    function generateSessionId() {
+      return 'session-' + Math.random().toString(36).substring(2, 15);
+    }
+
+    function getTimestamp() {
+      const now = new Date();
+      return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function appendMessage(role, text) {
+      const chatBox = document.getElementById("chat-box");
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("message", role);
+      const timestamp = `<span class="timestamp">${getTimestamp()}</span>`;
+      messageDiv.innerHTML = `<strong>${role === "user" ? "You" : "Bot"}:</strong> <span>${text}</span>${timestamp}`;
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function typeBotResponse(text) {
+      const chatBox = document.getElementById("chat-box");
+      const botDiv = document.createElement("div");
+      botDiv.classList.add("message", "bot");
+      botDiv.innerHTML = `<strong>Bot:</strong> <span id="typing"></span><span class="timestamp">${getTimestamp()}</span>`;
+      chatBox.appendChild(botDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      const typingSpan = botDiv.querySelector("#typing");
+
+      for (let i = 0; i < text.length; i++) {
+        typingSpan.textContent += text[i];
+        await new Promise(r => setTimeout(r, 20));
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById("message");
+      const message = input.value.trim();
+      if (!message) return;
+
+      appendMessage("user", message);
+      input.value = "";
+
+      try {
+        const response = await fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ session_id: sessionId, message: message })
+        });
+
+        const data = await response.json();
+        await typeBotResponse(data.response);
+      } catch {
+        appendMessage("bot", "⚠️ Error connecting to server.");
+      }
+    }
+
+    document.getElementById("message").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") sendMessage();
+    });
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark");
+    }
+
+    function exportChat() {
+      const chat = document.getElementById("chat-box").innerText;
+      const blob = new Blob([chat], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `chat-${new Date().toISOString().slice(0,19)}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

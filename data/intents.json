@@ -1,0 +1,93 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["Hi", "Hello", "Hey", "Good morning", "Good evening", "Hi there", "Hey there", "Greetings", "Howdy"],
+      "responses": ["Hello! How can I help you?", "Hi there, what can I do for you?", "Hey! How’s it going?", "Greetings! How can I assist you today?"]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["Bye", "See you later", "Goodbye", "Take care", "Catch you later", "Talk to you soon"],
+      "responses": ["Goodbye! Have a great day!", "See you soon!", "Take care!", "Catch you later!"]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thanks", "Thank you", "Much appreciated", "Thanks a lot", "Thanks for your help"],
+      "responses": ["You’re welcome!", "Glad I could help!", "Anytime!", "No problem, happy to assist!"]
+    },
+    {
+      "tag": "name",
+      "patterns": ["What is your name?", "Who are you?", "Tell me your name", "May I know your name?"],
+      "responses": ["I am your AI chatbot.", "I don’t have a personal name yet, but I’m here to help!", "You can call me Chatbot."]
+    },
+    {
+      "tag": "age",
+      "patterns": ["How old are you?", "What is your age?", "When were you created?", "How long have you existed?"],
+      "responses": ["I was created recently, so I’m pretty young!", "Age doesn’t matter, I’m always learning!", "I’m new here but eager to help you!"]
+    },
+    {
+      "tag": "query",
+      "patterns": ["I have a question", "Can you help me?", "I have a doubt", "I need assistance", "I want to ask something"],
+      "responses": ["Sure, ask me anything!", "I’m here to help, what’s your question?", "Of course! Please tell me your query."]
+    },
+    {
+      "tag": "smalltalk",
+      "patterns": ["How are you?", "How’s it going?", "What’s up?", "How do you do?", "Are you okay?"],
+      "responses": ["I’m doing well! How about you?", "All good here! What about you?", "I’m fine, thanks for asking!"]
+    },
+    {
+      "tag": "customer_support",
+      "patterns": [
+        "I have an issue with my order",
+        "My order hasn’t arrived",
+        "I want to return my product",
+        "I need help with my account",
+        "How can I get a refund?",
+        "I received a damaged item",
+        "I can’t login",
+        "I forgot my password",
+        "I want to cancel my order",
+        "Can you help me with billing?",
+        "I need technical support",
+        "My shipment is delayed"
+      ],
+      "responses": [
+        "I’m sorry to hear that! Could you please provide your order number so I can check?",
+        "We can help with that. Can you share your account details or email?",
+        "I understand your concern. Let me guide you through the return process.",
+        "No worries! I can assist you with account recovery or password reset.",
+        "I’ll do my best to resolve your issue quickly. Could you provide more details?",
+        "Our support team can assist you with refunds or replacements. Please provide your order ID.",
+        "I’m here to help with any technical issues. Could you describe the problem in detail?"
+      ]
+    },
+    {
+      "tag": "escalation",
+      "patterns": [
+        "I want to speak to a supervisor",
+        "Can you connect me to your manager?",
+        "I need human support",
+        "You cannot solve my problem",
+        "I want to escalate this issue",
+        "I need superior assistance"
+      ],
+      "responses": [
+        "I’m escalating your issue to a human supervisor. Please wait a moment.",
+        "It seems this requires human assistance. I will forward your query to our support team.",
+        "I cannot resolve this fully, but my manager can help. Please contact them or wait while I connect you.",
+        "For further help, please reach out to our support desk. I’ve logged your request for escalation."
+      ]
+    },
+    {
+  "tag": "fallback",
+  "patterns": ["", "I don't know what to say", "Can you answer this?", "Tell me something", "I’m not sure", "Random question"],
+  "responses": [
+    "I’m still learning, could you rephrase that?",
+    "Interesting! Tell me more about it.",
+    "I didn’t catch that. Could you ask differently?",
+    "That’s new to me, but I’m here to listen!",
+    "Hmm, I’m not sure, but let’s continue our chat!"
+  ]
+}
+  ]
+}
