@@ -1,5 +1,3 @@
-# app/session_manager.py
-
 # Simple in-memory session store
 session_store = {}
 
