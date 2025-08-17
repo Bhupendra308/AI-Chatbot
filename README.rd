@@ -1,29 +1,38 @@
-AI Chatbot Project
-Overview
+# **AI Chatbot Project**
+An intelligent chatbot with dynamic learning and multi-turn conversation support.
+
+---
+
+## Overview
 This project is an AI-powered chatbot that supports multi-turn conversations, dynamic learning from users, and a fallback to the Hugging Face API when a direct answer isn't available. The chatbot uses a custom intent model built with TensorFlow and stores user interactions and newly learned responses in a MySQL database.
 
 The chatbot's core capabilities include:
 
-Responding to greetings, goodbyes, and various custom queries.
+* Responding to greetings, goodbyes, and various custom queries.
 
-Simulating a customer support agent.
+* Simulating a customer support agent.
 
-Learning new responses and information from user inputs.
+* Learning new responses and information from user inputs.
 
-Maintaining conversation context through in-memory session management.
+* Maintaining conversation context through in-memory session management.
 
-Features
-Intent-based Responses: Utilizes a custom, trained TensorFlow model to understand user intent.
+---
 
-Dynamic Learning: The chatbot can dynamically learn new questions and answers, storing them in a database for future use.
+## Features
+* **Intent-based Responses**: Utilizes a custom, trained TensorFlow model to understand user intent.
 
-Fallback AI: Integrates with the Hugging Face BlenderBot for general queries that the intent model cannot handle, ensuring a more fluid conversation.
+* **Dynamic Learning**: The chatbot can dynamically learn new questions and answers, storing them in a database for future use.
 
-Session Management: A dedicated session manager maintains the conversational context over multiple messages.
+* **Fallback AI**: Integrates with the Hugging Face BlenderBot for general queries that the intent model cannot handle, ensuring a more fluid conversation.
 
-Frontend Integration: A FastAPI server is used to serve a simple, static HTML frontend, making the project easy to run and test.
+* **Session Management**: A dedicated session manager maintains the conversational context over multiple messages.
 
-Project Structure
+* **Frontend Integration**: A FastAPI server is used to serve a simple, static HTML frontend, making the project easy to run and test.
+
+---
+
+## Project Structure
+```text
 ai_chatbot/
 │
 ├── app/
@@ -46,46 +55,59 @@ ai_chatbot/
 │
 ├── requirements.txt      # List of project dependencies
 └── README.md             # This file
+```
 
-Installation
-Clone the repository
+---
 
-git clone <your-repo-url>
-cd ai_chatbot
+## Installation
 
-Create a virtual environment
+1.  **Clone the repository**
+    ```bash
+    git clone <your-repo-url>
+    cd ai_chatbot
+    ```
 
-# For Linux/macOS
-python3 -m venv venv
-source venv/bin/activate
+2.  **Create a virtual environment**
+    ```bash
+    # For Linux/macOS
+    python3 -m venv venv
+    source venv/bin/activate
+    
+    # For Windows
+    python -m venv venv
+    venv\Scripts\activate
+    ```
 
-# For Windows
-python -m venv venv
-venv\Scripts\activate
+3.  **Install dependencies**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-Install dependencies
+4.  **Setup `.env` (Optional but recommended)**
+    Create a `.env` file in the root directory and add your credentials. This file is not included in version control for security.
+    ```text
+    HF_API_TOKEN=your_huggingface_token
+    MYSQL_HOST=localhost
+    MYSQL_USER=root
+    MYSQL_PASSWORD=yourpassword
+    MYSQL_DB=chatbot_db
+    ```
 
-pip install -r requirements.txt
+---
 
-Setup .env (Optional but recommended)
-Create a .env file in the root directory and add your credentials. This file is not included in version control for security.
+## Usage
 
-HF_API_TOKEN=your_huggingface_token
-MYSQL_HOST=localhost
-MYSQL_USER=root
-MYSQL_PASSWORD=yourpassword
-MYSQL_DB=chatbot_db
+1.  **Run the FastAPI server**
+    Start the application server using `uvicorn`. The `--reload` flag is useful for development as it automatically restarts the server on code changes.
+    ```bash
+    uvicorn app.main:app --reload
+    ```
 
-Usage
-Run the FastAPI server
-Start the application server using uvicorn. The --reload flag is useful for development as it automatically restarts the server on code changes.
+2.  **Open the frontend**
+    Once the server is running, open a web browser and navigate to the following URL to access the chatbot interface:
+    ```
+    [http://127.0.0.1:8000](http://127.0.0.1:8000)
+    ```
 
-uvicorn app.main:app --reload
-
-Open the frontend
-Once the server is running, open a web browser and navigate to the following URL to access the chatbot interface:
-
-http://127.0.0.1:8000
-
-Chat with the bot
-You can now interact with the chatbot! The chatbot will automatically manage the session context to maintain a multi-turn conversation. Feel free to ask questions, type queries, or even teach the bot new responses.
+3.  **Chat with the bot**
+    You can now interact with the chatbot! The chatbot will automatically manage the session context to maintain a multi-turn conversation. Feel free to ask questions, type queries, or even teach the bot new responses.
